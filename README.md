@@ -154,3 +154,85 @@ dnsrecon -d networkwalks.com
 - WAF detection
 - IP address identification
 - Reconnaissance with Kali Linux command-line tools
+
+# Module 3 — Footprinting with Maltego
+
+## Objective
+Install Maltego on a Windows computer and use it to perform OSINT footprinting by discovering email addresses associated with a target domain.
+
+**Target domain:** `networkwalks.com` (lab-designated target, used with due permission)
+
+**Tool used:** Maltego Graph (Desktop) 4.14.0 — Community Edition
+
+> ⚠️ This lab was performed for educational purposes only, against a lab-designated target.
+
+---
+
+## Task 1 — Download & Install Maltego on Windows
+
+**Purpose:** Set up Maltego, a graphical OSINT and link-analysis tool, on a Windows machine.
+
+**Steps performed**
+1. Downloaded Maltego Graph for Windows from the official website (https://maltego.com).
+2. Ran the setup as administrator and completed the installer (including the Java Runtime prerequisite).
+3. Launched Maltego and chose **Maltego ID** activation (online).
+4. Created a free Maltego ID and logged in through the browser.
+5. Completed the configuration wizard with the default settings (Utilities transforms, default system browser, Privacy Mode: Normal).
+6. Opened a blank graph, confirming Maltego was ready to run transforms.
+
+**Result**
+
+| Item | Value |
+|---|---|
+| Operating System | Windows |
+| Application | Maltego Graph (Desktop) |
+| Version | 4.14.0 |
+| Activation | Maltego ID (free account) |
+| Privacy Mode | Normal |
+| Status | Installed and ready to run transforms |
+
+![Maltego installed](module3screenshot/maltegoinstalled.png)
+
+---
+
+## Task 2 — Find Email Addresses Related to the Target Domain
+
+**Purpose:** Use a Maltego transform to harvest publicly available email addresses linked to `networkwalks.com`.
+
+**Steps performed**
+1. Searched for **Domain** in the Entity Palette and dragged it onto the graph.
+2. Double-clicked the entity and renamed it to `networkwalks.com`.
+3. Right-clicked the entity, filtered for `email`, and ran the transform:
+   `[Utilities] To Emails @domain [Search Engine]`
+
+**Transform output**
+- The transform ran on 1 entity (`networkwalks.com`).
+- It completed in about 16 seconds and returned 1 entity.
+- It consumed 10 credits (190 remaining on the free account).
+
+**Result**
+
+| Entity Type | Value |
+|---|---|
+| Domain | networkwalks.com |
+| Email Address | info@networkwalks.com |
+
+The graph shows 2 entities and 1 link: the domain connected to the discovered email address.
+
+![Domain to email transform](module3screenshot/domainemailtransform.png)
+
+---
+
+## Why This Matters
+Email addresses discovered during footprinting help an attacker identify contacts for phishing or social engineering, and combined with other reconnaissance (such as the WordPress fingerprint found in Module 1) they help select technology-specific attacks. Defenders can use the same technique to see what an organization exposes publicly.
+
+## Notes
+- Maltego has many other transforms (DNS lookups, WHOIS details, person-from-domain, and more) that can be explored for further footprinting.
+- Maltego graphs can be exported to CSV, XLSX, image and PDF formats.
+
+## Skills Practiced
+- OSINT and passive footprinting
+- Installing and configuring security tools on Windows
+- Link analysis and graph-based investigation
+- Email address enumeration
+- Using transforms and understanding data-source credit limits
