@@ -236,3 +236,94 @@ Email addresses discovered during footprinting help an attacker identify contact
 - Link analysis and graph-based investigation
 - Email address enumeration
 - Using transforms and understanding data-source credit limits
+
+# Module 4 — Footprinting & Reconnaissance with theHarvester
+
+## Objective
+Use theHarvester in Kali Linux to gather email addresses, sub-domains and hosts for a target organization from public sources, without touching the target directly (passive reconnaissance).
+
+**Target domain:** `microsoft.com`
+
+**Tool used:** theHarvester 4.11.1 (pre-installed in Kali Linux)
+
+> ⚠️ This lab was performed for educational purposes only, using public data sources.
+
+---
+
+## Background
+theHarvester is a Python-based OSINT tool that collects emails, sub-domains, hosts, employee names, open ports and banners from public sources such as search engines, PGP key servers and Shodan.
+
+| Option | Meaning |
+|---|---|
+| `-d` | Target domain |
+| `-l` | Limit the number of results |
+| `-b` | Data source (e.g. `baidu`, `all`) |
+
+---
+
+## Task 1 — Emails & Sub-domains using Baidu (limit 1000)
+
+**Command**
+```bash
+theHarvester -d microsoft.com -l 1000 -b baidu
+```
+
+**Purpose:** Find email IDs and sub-domains related to `microsoft.com` using Baidu as the only source, with the result limit set to 1000.
+
+**Results**
+
+| Item | Result |
+|---|---|
+| Target | microsoft.com |
+| Source | Baidu |
+| IPs found | None |
+| Emails found | None |
+| People found | None |
+| Hosts / sub-domains found | None |
+
+**Observation:** Baidu returned no data for this domain at the time of the scan. theHarvester relies on third-party sources whose results change over time, so a single source can come back empty.
+
+![Task 1 – Baidu](module4screenshot/task1.png)
+
+---
+
+## Task 2 — Emails & Sub-domains using All Sources (limit 50)
+
+**Command**
+```bash
+theHarvester -d microsoft.com -l 50 -b all
+```
+
+**Purpose:** Query all supported sources at once, with the result limit set to 50.
+
+**Observations**
+- theHarvester 4.11.1 started the search against `microsoft.com` and read `/etc/theHarvester/api-keys.yaml` for each source.
+- Several sources failed with a **Missing API key** error because no API keys were configured:
+
+| Source | Status |
+|---|---|
+| BeVigil | Missing API key |
+| Bitbucket | Missing API key |
+| BufferOverrun | Missing API key |
+| BuiltWith | Missing API key |
+| Brave Search | Missing API key |
+| Censys | Missing API key (ID and/or Secret) |
+| CriminalIP | Missing API key |
+| Dehashed | Missing API key |
+| DNSDumpster | Missing API key |
+
+Sources that need an API key return no data until a key is added to `api-keys.yaml`.
+
+![Task 2 – all sources](module4screenshot/task2.png)
+
+---
+
+## Why This Matters
+theHarvester only reads public data, so the target never knows it is being studied. Attackers can use harvested emails for phishing and password attacks, and sub-domains widen the attack surface. Defenders run the same tool on their own organization to see what an attacker would see and reduce what they leak.
+
+## Skills Practiced
+- Passive reconnaissance and OSINT
+- Using theHarvester with different data sources
+- Understanding result limits (`-l`) and source selection (`-b`)
+- Troubleshooting missing API key errors
+- Documenting tool output as evidence
