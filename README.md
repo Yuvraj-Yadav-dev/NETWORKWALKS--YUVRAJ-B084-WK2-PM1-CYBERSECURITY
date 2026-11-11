@@ -432,3 +432,9 @@ Mac addresses are not shown for privacy concern.
 - Ping scanning with Nmap / Zenmap
 - Network topology visualization
 - Reading `ipconfig` output to find a LAN subnet
+
+## Final Report (W2-PM-FINAL)
+
+The detailed penetration-testing report covering the modules above is available here:
+
+> 🔗 **Report link:** https://docs.google.com/document/d/1GtPMuU0eG4y8hwnVNV51CPtuk9gZnDdu/edit?usp=sharing&ouid=111247344041454589335&rtpof=true&sd=true
