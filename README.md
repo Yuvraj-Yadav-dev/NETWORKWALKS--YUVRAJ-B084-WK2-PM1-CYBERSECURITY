@@ -321,3 +321,112 @@ theHarvester only reads public data, so the target never knows it is being studi
 - Understanding result limits (`-l`) and source selection (`-b`)
 - Troubleshooting missing API key errors
 - Documenting tool output as evidence
+
+# Module 5 — Network Scanning with Zenmap
+
+## Objective
+Use Zenmap, the official GUI for Nmap, to discover live hosts on a local network, identify their IP and MAC addresses, and visualize the network topology.
+
+**Tool used:** Zenmap / Nmap 7.993 on Windows
+---
+
+## Task 1 — Download & Install Zenmap on Windows
+
+**Purpose:** Install Nmap with its Zenmap GUI from the official website (https://nmap.org/download.html).
+
+**Result:** Zenmap is installed and running on Windows. The desktop shows the **Nmap - Zenmap GUI** shortcut, and Zenmap opens with the default *Intense scan* profile (`nmap -T4 -A -v`).
+
+![Zenmap installed](module5screenshot/zenmapinstalled.png)
+
+---
+
+## Task 2 — Find Local IP Address & LAN Subnet
+
+**Command**
+```cmd
+ipconfig
+```
+
+**Purpose:** Identify the PC's local IP address and subnet.
+
+**Results (Wi-Fi adapter)**
+
+| Item | Value |
+|---|---|
+| IPv4 Address | 192.168.1.37 |
+| Subnet Mask | 255.255.255.0 (/24) |
+| Default Gateway | 192.168.1.1 |
+| DNS Suffix | bbrouter |
+| LAN Subnet | 192.168.1.0/24 |
+
+The Ethernet 2 adapter (`192.168.56.1/24`) is a virtual adapter, likely from VirtualBox. It has no default gateway, so it is not the LAN used for the scan.
+
+![ipconfig](module5screenshot/ipconfig.png)
+
+---
+
+## Task 3 — Find Live Hosts in the Subnet
+
+**Command**
+```bash
+nmap -sn 192.168.1.0/24
+```
+
+**Purpose:** Run a Ping scan (host discovery only, no port scan) in Zenmap against the LAN subnet found in Task 2.
+
+**Result:** Nmap scanned 256 IP addresses and found 4 hosts up in 12.25 seconds.
+
+![Ping scan output](module5screenshot/pingscanoutput.png)
+
+---
+
+## Task 4 — How many hosts are live?
+
+**Answer:** **4 hosts** are live, including my own PC.
+
+---
+
+## Task 5 — IP addresses of the live hosts
+
+| # | IP Address | Notes |
+|---|---|---|
+| 1 | 192.168.1.1 | Default gateway (router), latency 0.18s |
+| 2 | 192.168.1.35 | Latency 0.41s |
+| 3 | 192.168.1.38 | Latency 0.17s |
+| 4 | 192.168.1.37 | My own PC (confirmed by `ipconfig`) |
+
+---
+
+## Task 6 — MAC addresses of the live hosts
+
+| IP Address | MAC Address | Vendor (per Nmap) |
+|---|---|---|
+| 192.168.1.1 | - | GX International BV |
+| 192.168.1.35 | - | Unknown |
+| 192.168.1.38 | - | Unknown |
+| 192.168.1.37 | Not shown (local host) | Use `ipconfig /all` to find it |
+
+Mac addresses are not shown for privacy concern.
+
+---
+
+## Task 7 — Network Topology
+
+**Purpose:** View the scan results as a topology graph and save it as a PDF.
+
+**Steps**
+1. Opened the **Topology** tab in Zenmap.
+2. Turned on the **Legend**.
+3. Clicked **Save Graphic** and chose **PDF**.
+
+**Result:** The topology shows `localhost` at the center, connected to all four live hosts (`192.168.1.1`, `.35`, `.37`, `.38`). All are green, meaning each host had fewer than 3 open ports found.
+
+![Topology](module5screenshot/topology.png)
+---
+
+## Skills Practiced
+- Network discovery and host identification
+- IP and MAC address identification
+- Ping scanning with Nmap / Zenmap
+- Network topology visualization
+- Reading `ipconfig` output to find a LAN subnet
