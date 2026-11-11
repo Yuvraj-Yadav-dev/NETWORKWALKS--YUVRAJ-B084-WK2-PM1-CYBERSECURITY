@@ -1,4 +1,6 @@
-# Module 1 — Footprinting & Reconnaissance
+# Networkwalks CyberSecurity Internship - Week 2
+#  Footprinting & Network Scanning
+## Module 1 — Footprinting & Reconnaissance
 
 ## Objective
 Perform footprinting and reconnaissance against a lab target using tools available in Kali Linux.
