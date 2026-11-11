@@ -163,9 +163,6 @@ Install Maltego on a Windows computer and use it to perform OSINT footprinting b
 **Target domain:** `networkwalks.com` (lab-designated target, used with due permission)
 
 **Tool used:** Maltego Graph (Desktop) 4.14.0 — Community Edition
-
-> ⚠️ This lab was performed for educational purposes only, against a lab-designated target.
-
 ---
 
 ## Task 1 — Download & Install Maltego on Windows
@@ -245,9 +242,6 @@ Use theHarvester in Kali Linux to gather email addresses, sub-domains and hosts 
 **Target domain:** `microsoft.com`
 
 **Tool used:** theHarvester 4.11.1 (pre-installed in Kali Linux)
-
-> ⚠️ This lab was performed for educational purposes only, using public data sources.
-
 ---
 
 ## Background
